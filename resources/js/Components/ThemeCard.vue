@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import CommentForm from '@/Components/CommentForm.vue';
+import { defineComponent } from "vue";
+import CommentForm from "@/Components/CommentForm.vue";
 
 export default defineComponent({
   components: {
@@ -56,10 +56,12 @@ export default defineComponent({
 
   methods: {
     toggleEditMode() {
+      this.emitter.emit("toggle-theme-edit-mode", this.theme);
+      this.emitter.emit("toggle-theme-creation-mode");
     },
     deleteTheme() {
-      if (confirm('Do you want to delete?')) {
-        this.$inertia.delete(this.route('themes.destroy', this.theme.id));
+      if (confirm("Do you want to delete?")) {
+        this.$inertia.delete(this.route("themes.destroy", this.theme.id));
       }
     },
   },

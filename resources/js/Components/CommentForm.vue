@@ -1,6 +1,7 @@
 <template>
   <form v-if="$page.props.user" @submit.prevent="submit">
     <textarea
+      placeholder="Comment"
       class="
         w-full
         h-16

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DestroyThemeRequest;
 use App\Http\Requests\StoreThemeRequest;
+use App\Http\Requests\UpdateThemeRequest;
 use App\Models\Theme;
 use App\Models\User;
 use Inertia\Inertia;
@@ -81,13 +82,16 @@ class ThemeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateThemeRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateThemeRequest $request, $id)
     {
-        //
+        $theme = Theme::find($id);
+        $theme->content = $request->validated()['content'];
+        $theme->save();
+        return Redirect::route('home');
     }
 
     /**
@@ -98,8 +102,7 @@ class ThemeController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::id() == Theme::find($id)->user->id)
-        {
+        if (Auth::id() == Theme::find($id)->user->id) {
             Theme::destroy($id);
         }
         return Redirect::route('home');
