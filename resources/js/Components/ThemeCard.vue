@@ -38,7 +38,7 @@
       Delete
     </button>
   </div>
-  <comment-form />
+  <comment-form v-bind:theme-id="this.theme.id"/>
 </template>
 
 <script>

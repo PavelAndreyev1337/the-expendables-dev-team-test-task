@@ -2,6 +2,7 @@
   <form v-if="$page.props.user" @submit.prevent="submit">
     <textarea
       placeholder="Comment"
+      v-model="form.content"
       class="
         w-full
         h-16
@@ -26,8 +27,28 @@ export default defineComponent({
   components: {
     JetButton,
   },
+  props: {
+    themeId: Number,
+  },
+  data() {
+    return {
+      editMode: false,
+      form: this.$inertia.form({
+        theme_id: this.themeId,
+        content: "",
+        comment_id: null,
+      }),
+    };
+  },
   methods: {
-    submit() {},
+    submit() {
+      if (this.editMode) {
+      } else {
+        this.form.post(this.route("comments.store"), {
+            onSuccess: () => {this.form.content = "";}
+        });
+      }
+    },
   },
 });
 </script>
