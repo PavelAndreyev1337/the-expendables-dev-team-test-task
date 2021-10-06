@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyThemeRequest;
 use App\Http\Requests\StoreThemeRequest;
-use App\Http\Resources\ThemeResource;
 use App\Models\Theme;
 use App\Models\User;
 use Inertia\Inertia;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,10 +21,16 @@ class ThemeController extends Controller
      */
     public function index()
     {
+        // dd(ThemeResource::collection(
+        //     Theme::orderBy('created_at', 'desc')->get()
+        // ));
         return Inertia::render('Themes', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'themes' => Theme::orderBy('created_at', 'desc')->get()
+            'themes' => Theme::orderBy('created_at', 'desc')->get()->map(function ($theme) {
+                $theme->canControl = $theme->user_id == Auth::id();
+                return $theme;
+            })
         ]);
     }
 
@@ -93,6 +98,10 @@ class ThemeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Auth::id() == Theme::find($id)->user->id)
+        {
+            Theme::destroy($id);
+        }
+        return Redirect::route('home');
     }
 }

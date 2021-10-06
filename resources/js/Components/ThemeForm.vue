@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetLabel from "@/Jetstream/Label.vue";
-import JetButton from "@/Jetstream/Button.vue";
+import { defineComponent } from 'vue';
+import JetInput from '@/Jetstream/Input.vue';
+import JetLabel from '@/Jetstream/Label.vue';
+import JetButton from '@/Jetstream/Button.vue';
 
 export default defineComponent({
   components: {
@@ -32,15 +32,16 @@ export default defineComponent({
 
   data() {
     return {
+      editMode: false,
       form: this.$inertia.form({
-        content: "",
+        content: '',
       }),
     };
   },
 
   methods: {
     submit() {
-      this.form.post(this.route("themes.store"));
+      this.form.post(this.route('themes.store'));
     },
   },
 });
