@@ -23,7 +23,7 @@
                                     Dashboard
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('home')">
-                                    HomePage
+                                    Home page
                                 </jet-nav-link>
                             </div>
                         </div>
