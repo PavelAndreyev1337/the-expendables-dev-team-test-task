@@ -59,4 +59,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the user themes.
+     *
+     * @var array
+     */
+    public function themes()
+    {
+        return $this->hasMany(Theme::class);
+    }
 }
