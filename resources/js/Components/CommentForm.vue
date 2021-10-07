@@ -29,6 +29,7 @@ export default defineComponent({
   },
   props: {
     themeId: Number,
+    commentId: Object
   },
   data() {
     return {
@@ -36,7 +37,7 @@ export default defineComponent({
       form: this.$inertia.form({
         theme_id: this.themeId,
         content: "",
-        comment_id: null,
+        comment_id: this.commentId,
       }),
     };
   },
@@ -45,7 +46,9 @@ export default defineComponent({
       if (this.editMode) {
       } else {
         this.form.post(this.route("comments.store"), {
-            onSuccess: () => {this.form.content = "";}
+          onSuccess: () => {
+            this.form.content = "";
+          },
         });
       }
     },

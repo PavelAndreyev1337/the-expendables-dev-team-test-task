@@ -11,9 +11,11 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => require(`./Pages/${name}.vue`),
     setup({ el, app, props, plugin }) {
-        const vueApp = createApp({ render: () => h(app, props) })
+        const vueApp = createApp({ render: () => h(app, props) });
         vueApp.config.globalProperties.emitter = mitt();
-        vueApp.use(plugin).mixin({ methods: { route } }).mount(el);
+        vueApp.use(plugin)
+            .mixin({ methods: { route } })
+            .mount(el);
     },
 });
 

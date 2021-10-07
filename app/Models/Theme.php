@@ -20,4 +20,14 @@ class Theme extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

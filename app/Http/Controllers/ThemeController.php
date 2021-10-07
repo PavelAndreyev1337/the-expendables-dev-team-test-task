@@ -22,13 +22,14 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        // dd(ThemeResource::collection(
-        //     Theme::orderBy('created_at', 'desc')->get()
-        // ));
         return Inertia::render('Themes', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'themes' => Theme::orderBy('created_at', 'desc')->get()->map(function ($theme) {
+            'themes' => Theme::with(['comments' => function ($query) {
+                $query->where('comment_id', '=', null)->with(['comments' => function ($query) {
+                    $query->with('user')->orderBy('created_at', 'desc');
+                }, 'user'])->orderBy('created_at', 'desc')->paginate(10);
+            }])->orderBy('created_at', 'desc')->get()->map(function ($theme) {
                 $theme->canControl = $theme->user_id == Auth::id();
                 return $theme;
             })

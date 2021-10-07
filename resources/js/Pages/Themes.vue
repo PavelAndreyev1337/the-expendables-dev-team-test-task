@@ -59,5 +59,9 @@ export default defineComponent({
     phpVersion: String,
     themes: Array,
   },
+
+  mounted() {
+      console.log(this.themes);
+  }
 });
 </script>

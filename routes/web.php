@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ThemeController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
+use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        Auth::user()->comments()->create($request->validated());
+        User::find(Auth::id())->comments()->create($request->validated());
         return Redirect::route('home');
     }
 
@@ -85,6 +86,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Auth::id() == Comment::find($id)['user_id']) {
+            Comment::destroy($id);
+        }
+        return Redirect::route('home');
     }
 }
