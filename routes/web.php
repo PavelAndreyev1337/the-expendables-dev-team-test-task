@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ThemeController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,7 +19,8 @@ use Inertia\Inertia;
 Route::get('/', [ThemeController::class, 'index'])->name('home');
 
 Route::resources([
-    'themes' => ThemeController::class
+    'themes' => ThemeController::class,
+    'comments' => CommentController::class,
 ]);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

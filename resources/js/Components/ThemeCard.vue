@@ -1,6 +1,6 @@
 <template>
   <div class="rounded overflow-hidden shadow-lg my-1 p-4">
-    {{ theme.content }}
+    <span class="text-2xl font-bold">{{ theme.content }}</span>
     <button
       class="
         h-8
@@ -38,26 +38,39 @@
       Delete
     </button>
   </div>
-  <comment-form />
+  <comment-form :theme-id="this.theme.id" :comment-id="null" />
+  <comments
+    :comments="this.theme.comments"
+    :theme-id="this.theme.id"
+    :nesting="1"
+  />
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import CommentForm from "@/Components/CommentForm.vue";
+import CommentForm from "@/Components/CommentForm";
+import Comments from "@/Components/Comments";
 
 export default defineComponent({
   components: {
     CommentForm,
+    Comments,
   },
 
   props: {
     theme: Object,
   },
 
+  data() {
+    return {
+      comments: [],
+      nesting: 0,
+    };
+  },
+
   methods: {
     toggleEditMode() {
       this.emitter.emit("toggle-theme-edit-mode", this.theme);
-      this.emitter.emit("toggle-theme-creation-mode");
     },
     deleteTheme() {
       if (confirm("Do you want to delete?")) {

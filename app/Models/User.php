@@ -63,10 +63,20 @@ class User extends Authenticatable
     /**
      * Get the user themes.
      *
-     * @var array
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function themes()
     {
         return $this->hasMany(Theme::class);
+    }
+
+    /**
+     * comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
