@@ -65,11 +65,13 @@ export default defineComponent({
     comment: Object,
   },
   methods: {
-    toggleEditMode() {},
+    toggleEditMode() {
+      this.emitter.emit("toggle-comment-edit-mode", this.comment);
+    },
     deleteComment() {
-        if (confirm("Do you want to delete?")) {
-            this.$inertia.delete(this.route("comments.destroy", this.comment.id));
-        }
+      if (confirm("Do you want to delete?")) {
+        this.$inertia.delete(this.route("comments.destroy", this.comment.id));
+      }
     },
   },
 });

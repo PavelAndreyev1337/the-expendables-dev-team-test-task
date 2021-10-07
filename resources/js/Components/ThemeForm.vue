@@ -61,7 +61,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.emitter.on("toggle-theme-edit-mode", (theme) => {
+    this.emitter.on("toggle-theme-edit-mode", theme => {
       this.editMode = true;
       this.themeId = theme.id;
       this.form.content = theme.content;

@@ -29,11 +29,12 @@ export default defineComponent({
   },
   props: {
     themeId: Number,
-    commentId: Object
+    commentId: Object,
   },
   data() {
     return {
       editMode: false,
+      updatedCommentId: null,
       form: this.$inertia.form({
         theme_id: this.themeId,
         content: "",
@@ -44,6 +45,11 @@ export default defineComponent({
   methods: {
     submit() {
       if (this.editMode) {
+        this.form.put(this.route("comments.update", this.updatedCommentId), {
+          onSuccess: () => {
+            this.emitter.emit("toggle-comment-creation-mode");
+          },
+        });
       } else {
         this.form.post(this.route("comments.store"), {
           onSuccess: () => {
@@ -52,6 +58,19 @@ export default defineComponent({
         });
       }
     },
+  },
+
+  mounted() {
+    this.emitter.on("toggle-comment-edit-mode", (comment) => {
+      this.editMode = true;
+      this.updatedCommentId = comment.id;
+      this.form.content = comment.content;
+    });
+    this.emitter.on("toggle-comment-creation-mode", () => {
+      this.editMode = false;
+      this.updatedCommentId = null;
+      this.form.content = "";
+    });
   },
 });
 </script>

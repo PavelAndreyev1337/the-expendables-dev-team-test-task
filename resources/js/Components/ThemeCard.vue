@@ -38,8 +38,12 @@
       Delete
     </button>
   </div>
-  <comment-form :theme-id="this.theme.id" :comment-id="null"/>
-  <comments :comments="this.theme.comments" :theme-id="this.theme.id" :nesting="1" />
+  <comment-form :theme-id="this.theme.id" :comment-id="null" />
+  <comments
+    :comments="this.theme.comments"
+    :theme-id="this.theme.id"
+    :nesting="1"
+  />
 </template>
 
 <script>
@@ -58,16 +62,15 @@ export default defineComponent({
   },
 
   data() {
-      return {
-          comments: [],
-          nesting: 0
-      }
+    return {
+      comments: [],
+      nesting: 0,
+    };
   },
 
   methods: {
     toggleEditMode() {
       this.emitter.emit("toggle-theme-edit-mode", this.theme);
-      this.emitter.emit("toggle-theme-creation-mode");
     },
     deleteTheme() {
       if (confirm("Do you want to delete?")) {
